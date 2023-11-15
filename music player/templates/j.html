@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f08d;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        #song-name {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        #song-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #song-list li {
+            cursor: pointer;
+            padding: 5px;
+            font-size: 1.1em;
+        }
+
+        #song-list li:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .controls {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Music Player</h1>
+    <audio id="audio-player" controls>
+        <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="song-name"></div>
+
+    <ul id="song-list"></ul>
+
+    <div class="controls">
+        <button id="play-button">Play</button>
+        <button id="pause-button">Pause</button>
+        <button id="next-button">Next</button>
+        <button id="shuffle-button">Shuffle</button>
+    </div>
+
+    <script>
+        const audioPlayer = document.getElementById("audio-player");
+        const songName = document.getElementById("song-name");
+        const songList = document.getElementById("song-list");
+        const playButton = document.getElementById("play-button");
+        const pauseButton = document.getElementById("pause-button");
+        const nextButton = document.getElementById("next-button");
+        const shuffleButton = document.getElementById("shuffle-button");
+
+        const playlist = [
+            { title: "Song 1", source: "static/song1.mp3" },
+            { title: "Song 2", source: "static/song2.mp3" },
+            { title: "Song 3", source: "static/song3.mp3" },
+            { title: "Song 4", source: "static/song4.mp3" },
+            { title: "Song 5", source: "static/song5.mp3" },
+            { title: "Song 6", source: "static/song6.mp3" },
+            { title: "Song 7", source: "static/song7.mp3" },
+            { title: "Song 8", source: "static/song8.mp3" },
+            { title: "Song 9", source: "static/song9.mp3" },
+            { title: "Song 10", source: "static/song10.mp3" },
+            { title: "Song 11", source: "static/song11.mp3" },
+            { title: "Song 12", source: "static/song12.mp3" },
+            { title: "Song 13", source: "static/song13.mp3" },
+            { title: "Song 14", source: "static/song14.mp3" },
+            { title: "Song 15", source: "static/song15.mp3" },
+            { title: "Song 16", source: "static/song16.mp3" },
+            { title: "Song 17", source: "static/song17.mp3" },
+            { title: "Song 18", source: "static/song18.mp3" },
+            { title: "Song 19", source: "static/song19.mp3" },
+            { title: "Song 20", source: "static/song20.mp3" },
+            { title: "Song 21", source: "static/song21.mp3" },
+            { title: "Song 22", source: "static/song22.mp3" },
+            { title: "Song 23", source: "static/song23.mp3" },
+            { title: "Song 24", source: "static/song24.mp3" },
+            { title: "Song 25", source: "static/song25.mp3" },
+            { title: "Song 26", source: "static/song26.mp3" },
+            { title: "Song 27", source: "static/song27.mp3" },
+            { title: "Song 28", source: "static/song28.mp3" },
+            { title: "Song 29", source: "static/song29.mp3" },
+            { title: "Song 30", source: "static/song30.mp3" },
+            { title: "Song 31", source: "static/song31.mp3" },
+            { title: "Song 32", source: "static/song32.mp3" },
+            { title: "Song 33", source: "static/song33.mp3" },
+            { title: "Song 34", source: "static/song34.mp3" },
+            { title: "Song 35", source: "static/song35.mp3" },
+            { title: "Song 36", source: "static/song36.mp3" },
+            { title: "Song 37", source: "static/song37.mp3" },
+            { title: "Song 38", source: "static/song38.mp3" },
+            { title: "Song 39", source: "static/song39.mp3" },
+            { title: "Song 40", source: "static/song40.mp3" },
+            { title: "Song 41", source: "static/song41.mp3" },
+            { title: "Song 42", source: "static/song42.mp3" },
+            { title: "Song 43", source: "static/song43.mp3" },
+            { title: "Song 44", source: "static/song44.mp3" },
+            { title: "Song 45", source: "static/song45.mp3" },
+            { title: "Song 46", source: "static/song46.mp3" },
+            { title: "Song 47", source: "static/song47.mp3" },
+            { title: "Song 48", source: "static/song48.mp3" },
+        ];
+
+        let currentTrack = 0;
+        let isShuffle = false;
+
+        function playSong(index) {
+            audioPlayer.src = playlist[index].source;
+            songName.textContent = playlist[index].title;
+            audioPlayer.play();
+        }
+
+        function playAudio() {
+            audioPlayer.play();
+        }
+
+        function pauseAudio() {
+            audioPlayer.pause();
+        }
+
+        function nextTrack() {
+            if (isShuffle) {
+                currentTrack = Math.floor(Math.random() * playlist.length);
+            } else {
+                currentTrack = (currentTrack + 1) % playlist.length;
+            }
+            playSong(currentTrack);
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+        }
+
+        playButton.addEventListener("click", playAudio);
+        pauseButton.addEventListener("click", pauseAudio);
+        nextButton.addEventListener("click", nextTrack);
+        shuffleButton.addEventListener("click", toggleShuffle);
+
+        // Create the list of songs
+        playlist.forEach((song, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = song.title;
+            listItem.addEventListener("click", () => {
+                playSong(index);
+            });
+            songList.appendChild(listItem);
+        });
+
+        audioPlayer.addEventListener("ended", () => {
+            if (!isShuffle) {
+                currentTrack = (currentTrack + 1) % playlist.length;
+            } else {
+                currentTrack = Math.floor(Math.random() * playlist.length);
+            }
+            playSong(currentTrack);
+        });
+
+        playSong(0); // Start with the first song
+    </script>
+</body>
+</html>
+
+
